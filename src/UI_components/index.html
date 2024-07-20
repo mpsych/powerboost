@@ -1,0 +1,56 @@
+<nav>
+  <div class="nav-content">
+    <div class="toggle-btn">
+      <i class="fas fa-plus"></i>
+    </div>
+
+    <span class="myspan" style="--i: 2">
+      <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
+      <div class="search-box">
+        <datalist id="suggestions">
+          <option value="Sobel"></option>
+          <option value="Sam"></option>
+          <option value="Image Captioning"></option>
+          <option value="Plotly"></option>
+          <option value="Tracko"></option>
+        </datalist>
+        <input
+          list="functionalityOptions"
+          id="functionalitySelector"
+          placeholder="Type to search functionality..."
+        />
+        <datalist id="functionalityOptions">
+          <option value="Sobel">Sobel</option>
+          <option value="Sam">Sam</option>
+          <option value="Image Captioning">Image Captioning</option>
+          <option value="Plotly">Plotly</option>
+        </datalist>
+        <button onclick="applySelectedFunctionality()">Apply</button>
+      </div>
+    </span>
+    <div class="search-box">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Search..."
+        oninput="showSuggestions(this.value)"
+        autocomplete="off"
+      />
+      <div id="suggestionsContainer" class="suggestions"></div>
+    </div>
+
+    <span class="myspan" style="--i: 3">
+      <a href="#"><i class="fa-regular fa-pen-to-square"></i></a>
+      <div class="edit-box">
+        <div id="editor">console.log(Boostlet.init());</div>
+        <button onclick="runCode()">Run Code</button>
+        <div id="output"></div>
+      </div>
+    </span>
+
+    <span class="myspan spanCategories" style="--i: 4">
+      <a href="#"><i class="fa-sharp fa-solid fa-b"></i></a>
+      <div class="rect-box categories"></div>
+    </span>
+  </div>
+</nav>

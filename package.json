@@ -1,0 +1,9 @@
+{
+    "name": "powerboost",
+    "version": "0.0.1-alpha",
+    "source": "src/index.js",
+    "main": "dist/powerboost.min.js",
+    "devDependencies": {
+      "parcel": "^2.10.3"
+    }
+  }
