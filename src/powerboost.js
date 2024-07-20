@@ -9,14 +9,14 @@ export class Powerboost {
     //load css links
     console.log("inside load_links")
     Util.load_Links("stylesheet", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css");
-    Util.load_Links("stylesheet", "http://localhost:8000/src/UI_components/style.css");
+    Util.load_Links("stylesheet", "https://github.com/RohiniDeshmukh/powerboost/blob/main/src/UI_components/style.css");
   }
 
   load_html(callback) {
     console.log("Loading HTML...");
 
 
-    fetch("http://localhost:8000/src/UI_components/index.html")
+    fetch("https://github.com/RohiniDeshmukh/powerboost/blob/main/src/UI_components/index.html")
       .then((response) => response.text())
       .then((htmlContent) => {
         const template = document.createElement("template");
@@ -38,7 +38,7 @@ export class Powerboost {
     console.log("Loading scripts...");
     Util.load_Scripts("https://rohinideshmukh.github.io/boostlet/dist/boostlet.min.js", "head");
     Util.load_Scripts("https://cdnjs.cloudflare.com/ajax/libs/ace/1.33.0/ace.js", "head");
-    Util.load_Scripts("http://localhost:8000/src/UI_components/script.js", "body");
+    Util.load_Scripts("https://github.com/RohiniDeshmukh/powerboost/blob/main/src/UI_components/script.js", "body");
 
 
 
