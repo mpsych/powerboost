@@ -34,6 +34,7 @@ export class Powerboost {
     }, 1000);
   }
 
+
   load_scripts(callback) {
     console.log("Loading scripts...");
     Util.load_Scripts("https://rohinideshmukh.github.io/boostlet/dist/boostlet.min.js", "head");
@@ -54,3 +55,14 @@ export class Powerboost {
   }
 
 }
+
+
+
+
+
+
+
+
+
+
+

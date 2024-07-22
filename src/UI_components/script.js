@@ -71,6 +71,8 @@ function open_close_span() {
     });
 }
 
+
+
 // ace editor run button code
 async function runCode() {
   const userCode = Powerboost.editor.getValue();
@@ -206,6 +208,12 @@ function boostlet_categories() {
 open_close_drag_nav();
 open_close_span();
 boostlet_categories();
+
+
+
+
+
+
 
 
 
