@@ -1,23 +1,35 @@
 export class Util {
- 
-   static load_Links(rel, href) {
+
+  static load_Links(rel, href) {
     var link = document.createElement("link");
     link.rel = rel;
     link.href = href;
     document.head.appendChild(link);
   }
 
-  static load_Scripts(src, location = "head") {
+  static load_Scripts(src) {
     var script = document.createElement("script");
     script.src = src;
-    if (location === "body") {
-      document.body.appendChild(script);
-    } else {
-      document.head.appendChild(script);
-    }
+    document.head.appendChild(script);
+
   }
 
-  static load_ace() {
+  static load_Html(url) {
+    console.log("Loading HTML...");
+
+
+    fetch(url)
+      .then((response) => response.text())
+      .then((htmlContent) => {
+        const template = document.createElement("template");
+        template.innerHTML = htmlContent.trim();
+        document.body.appendChild(template.content.firstChild);
+      })
+      .catch((error) => console.error("Error loading HTML content:", error));
+
+  }
+
+  static load_Ace() {
     var script = document.createElement("script");
     // Set the content of the script
     script.textContent = `

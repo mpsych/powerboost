@@ -3,6 +3,7 @@
 function open_close_drag_nav() {
   const nav = document.querySelector("nav");
   const toggleBtn = document.querySelector(".toggle-btn");
+  
   toggleBtn.addEventListener("click", () => {
     nav.classList.toggle("open");
   });
@@ -24,6 +25,7 @@ function open_close_drag_nav() {
     nav.style.top = `${newTop}px`;
     nav.style.left = `${newLeft}px`;
   }
+  
   nav.addEventListener("mousedown", () => {
     nav.addEventListener("mousemove", onDrag);
   });
