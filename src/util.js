@@ -5,7 +5,7 @@ export class Util {
     link.rel = rel;
     link.href = href;
     document.head.appendChild(link);
-  }
+  } 
 
   static load_Scripts(src) {
     var script = document.createElement("script");

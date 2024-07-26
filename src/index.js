@@ -18,23 +18,25 @@ window.Powerboost.load_html(() => {
 setTimeout(function () {
     
     window.Powerboost.load_aceEditor();
-
+    
     // Initialize the Nav class
     const nav = new Nav("nav", ".toggle-btn");
     nav.init();
 
+
     // Initialize the Editor class
     const editorInstance = new Editor(window.Powerboost.editor, "output", "run-btn");
     editorInstance.init();
+
 
     // Initialize the Categories class
     const categoriesInstance = new Categories(Boostlet.categories, Boostlet.examples);
     categoriesInstance.init();
 
 
+
     // Base URL for scripts
     const baseURL = "https://boostlet.org/examples/";
-
     // Scripts to load
     const scriptsToLoad = [
         { id: "Sobel", name: "Sobel", script: `${baseURL}sobel.js` },
@@ -43,10 +45,8 @@ setTimeout(function () {
         { id: "ImageCaptioning", name: "Image Captioning", script: `${baseURL}imageCaptioning.js` },
         { id: "Trako", name: "Tracko", script: `${baseURL}trako.js` },
     ];
-
+  // Initialize the search class
     const searchInstance = new Search("searchInput", "suggestionsContainer", scriptsToLoad);
-    searchInstance.init();
-
-    
+    searchInstance.init();    
 
 }, 1000);
