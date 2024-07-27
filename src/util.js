@@ -5,7 +5,7 @@ export class Util {
     link.rel = rel;
     link.href = href;
     document.head.appendChild(link);
-  } 
+  }
 
   static load_Scripts(src) {
     var script = document.createElement("script");
@@ -23,12 +23,12 @@ export class Util {
       .then((htmlContent) => {
         const template = document.createElement("template");
         template.innerHTML = htmlContent.trim();
-        
-        const main = document.getElementById("#main");
-        if(!main){
+
+        const main = document.querySelector("#main");
+        if (!main) {
           document.body.appendChild(template.content.firstChild);
         }
-        else{
+        else {
           main.appendChild(template.content.firstChild);
         }
 
