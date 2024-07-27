@@ -23,7 +23,15 @@ export class Util {
       .then((htmlContent) => {
         const template = document.createElement("template");
         template.innerHTML = htmlContent.trim();
-        document.body.appendChild(template.content.firstChild);
+        
+        const main = document.querySelector('main');
+        if(!main){
+          document.body.appendChild(template.content.firstChild);
+        }
+        else{
+          main.appendChild(template.content.firstChild);
+        }
+
       })
       .catch((error) => console.error("Error loading HTML content:", error));
 
