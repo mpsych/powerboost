@@ -93,6 +93,7 @@ nav.open .nav-content span {
   cursor: pointer;
   width: 190px;
   padding: 10px;
+  color: black;
 }
 
 .suggestion-item:hover {
