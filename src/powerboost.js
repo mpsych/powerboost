@@ -15,7 +15,7 @@ export class Powerboost {
   }
 
 
-  load_urls(callback) {
+  load_urls() {
     console.log("inside load_links")
     Util.load_Links("stylesheet", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css");
     Util.load_Links("stylesheet", "https://rohinideshmukh.github.io/powerboost/src/UI_components/style.css");
@@ -26,7 +26,7 @@ export class Powerboost {
     Util.load_Scripts("https://cdnjs.cloudflare.com/ajax/libs/ace/1.33.0/ace.js");
 
     console.log("Scripts loaded.");
-    // callback();
+
 
   }
 

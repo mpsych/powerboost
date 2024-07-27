@@ -97,7 +97,7 @@ export class Categories {
     }
 
     toggleVisibility(element, show) {
-        element.style.display = show ? 'block' : 'none';
+        element.style.display = show ? 'flex' : 'none';
     }
 
     attachEventListeners() {

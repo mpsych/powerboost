@@ -18,6 +18,8 @@ export class Editor {
 
         outputDiv.innerHTML = "";
 
+
+
         console.log = function (message) {
             outputDiv.innerHTML += message + "<br>";
         };
@@ -25,7 +27,7 @@ export class Editor {
         try {
             eval(userCode);
         } catch (e) {
-            console.log("Error: " + e.message);
+            console.log(e);
         }
     }
 }

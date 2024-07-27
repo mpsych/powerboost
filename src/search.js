@@ -1,98 +1,80 @@
 export class Search {
-    constructor(inputId, suggestionsContainerId, scriptsToLoad) {
-        this.searchInput = document.getElementById(inputId);
-        this.suggestionsContainer = document.getElementById(suggestionsContainerId);
-        this.scriptsToLoad = scriptsToLoad;
-        this.suggestions = this.createSuggestions(scriptsToLoad);
+    constructor() {
+        this.repoOwner = 'RohiniDeshmukh';
+        this.repoName = 'boostlet';
+        this.folderPath = 'examples';
+        this.apiUrl = `https://api.github.com/repos/${this.repoOwner}/${this.repoName}/contents/${this.folderPath}`;
+        this.fileList = [];
     }
+
 
     init() {
-        this.searchInput.addEventListener("input", (e) => this.showSuggestions(e.target.value));
-        this.scriptsToLoad.forEach((scriptInfo) => this.addScriptLoadEventListener(scriptInfo));
-    }
+        this.fetchFileNames();
 
-    createSuggestions(scriptsToLoad) {
-        const suggestions = {};
-        scriptsToLoad.forEach(({ name, script }) => {
-            const key = name.charAt(0).toLowerCase();
-            if (!suggestions[key]) {
-                suggestions[key] = [];
-            }
-            suggestions[key].push({ name, script });
-        });
-        return suggestions;
-    }
-
-    addScriptLoadEventListener(scriptInfo) {
-        document.getElementById(scriptInfo.id).addEventListener("click", () => this.loadScript(scriptInfo.script));
-    }
-
-    showSuggestions(inputValue) {
-        this.suggestionsContainer.innerHTML = "";
-
-        let matchedSuggestions = this.getMatchedSuggestions(inputValue);
-
-        matchedSuggestions.forEach((suggestion) => {
-            const suggestionElement = this.createSuggestionElement(suggestion);
-            this.suggestionsContainer.appendChild(suggestionElement);
+        const searchInput = document.querySelector('.search-input');
+        searchInput.addEventListener('input', () => {
+            const query = searchInput.value;
+            const suggestions = this.filterFileNames(query);
+            this.displaySuggestions(suggestions);
         });
 
-        this.suggestionsContainer.style.display = matchedSuggestions.length > 0 ? "block" : "none";
+        document
+            .querySelector(".fa-solid.fa-magnifying-glass")
+            .parentNode.addEventListener('click', () =>
+                this.appendScriptToHead(document.querySelector('.search-input').value));
+
     }
 
-    getMatchedSuggestions(inputValue) {
-        let matchedSuggestions = [];
-        for (let key in this.suggestions) {
-            if (key.startsWith(inputValue.toLowerCase())) {
-                matchedSuggestions = matchedSuggestions.concat(this.suggestions[key]);
-            }
+    async fetchFileNames() {
+        try {
+            const response = await fetch(this.apiUrl);
+            const data = await response.json();
+            this.fileList = data.map(file => file.name);
+            // console.log('File List:', this.fileList);
+        } catch (error) {
+            console.error('Error fetching file names:', error);
+            this.fileList = [];
         }
-        return matchedSuggestions;
     }
 
-    createSuggestionElement(suggestion) {
-        const suggestionElement = document.createElement("div");
-        suggestionElement.classList.add("suggestion-item");
-        suggestionElement.textContent = suggestion.name;
-        suggestionElement.onclick = () => {
-            this.searchInput.value = suggestion.name;
-            this.suggestionsContainer.innerHTML = "";
-            this.loadScript(suggestion.script);
-        };
-        return suggestionElement;
+    filterFileNames(query) {
+        if (!query) return [];
+        return this.fileList.filter(name => name.toLowerCase().startsWith(query.toLowerCase()));
     }
 
-    loadScript(scriptSrc) {
-        this.loadExternalScript(scriptSrc);
+    displaySuggestions(suggestions) {
+        const searchBox = document.querySelector('.search-box');
+        searchBox.innerHTML = '';
+
+        suggestions.forEach(fileName => {
+            const suggestionDiv = document.createElement('div');
+            suggestionDiv.textContent = fileName;
+            suggestionDiv.classList.add('suggestion-item');
+            searchBox.appendChild(suggestionDiv);
+            suggestionDiv.addEventListener('click', () => this.selectSuggestion(fileName));
+
+        });
+
+        searchBox.style.display = suggestions.length ? 'block' : 'none';
     }
 
-    loadExternalScript(scriptSrc, callback) {
-        const script = document.createElement("script");
-        script.type = "text/javascript";
-        script.src = scriptSrc;
+    selectSuggestion(fileName) {
+        const searchInput = document.querySelector('.search-input');
+        searchInput.value = fileName;
 
-        script.onload = () => {
-            console.log(`${scriptSrc} has been loaded successfully.`);
-            if (callback) callback();
-        };
+        const searchBox = document.querySelector('.search-box');
+        searchBox.style.display = 'none';
 
-        script.onerror = () => {
-            console.error(`Failed to load script: ${scriptSrc}`);
-        };
+    }
 
+    appendScriptToHead(fileName) {
+        const baseUrl = 'https://boostlet.org/examples/';
+        const script = document.createElement('script');
+        script.src = `${baseUrl}${fileName}`;
         document.head.appendChild(script);
+
+
     }
 
-    applySelectedFunctionality(functionalitySelectorId, functionalityScripts) {
-        const selector = document.getElementById(functionalitySelectorId);
-        const selectedFunctionality = selector.value;
-        const scriptUrl = functionalityScripts[selectedFunctionality];
-        if (scriptUrl) {
-            this.loadExternalScript(scriptUrl, () => {
-                console.log(`${selectedFunctionality} functionality has been applied.`);
-            });
-        } else {
-            console.error("No script URL found for selected functionality.");
-        }
-    }
-}
+
+}  
