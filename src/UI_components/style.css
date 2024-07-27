@@ -2,6 +2,7 @@ body {
   min-height: 100vh;
   background-color: #1111;
   overflow: hidden;
+  z-index: 1000;
 }
 nav {
   position: fixed;
@@ -14,6 +15,7 @@ nav {
   justify-content: center;
   cursor: grab;
   left: 150px;
+  z-index: 1000;
 }
 nav .nav-content {
   display: flex;
