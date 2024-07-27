@@ -24,7 +24,7 @@ export class Util {
         const template = document.createElement("template");
         template.innerHTML = htmlContent.trim();
         
-        const main = document.querySelector('.main');
+        const main = document.getElementById("#main");
         if(!main){
           document.body.appendChild(template.content.firstChild);
         }
