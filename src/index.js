@@ -30,8 +30,10 @@ setTimeout(function () {
 
 
     // Initialize the Categories class
+    
     const categories = new Categories(Boostlet.categories, Boostlet.examples);
     categories.init();
+
 
 
     // Initialize the search class

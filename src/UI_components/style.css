@@ -1,12 +1,6 @@
-body {
-  min-height: 100vh;
-  background-color: #1111;
-  overflow: hidden;
-  z-index: 1000;
-}
 nav {
   position: fixed;
-  top: 20px;
+  top: 300px;
   right: 0;
   right: calc(100% - 100px);
   width: 80px;
@@ -14,8 +8,7 @@ nav {
   align-items: center;
   justify-content: center;
   cursor: grab;
-  left: 150px;
-  z-index: 1000;
+  z-index: 9999;
 }
 nav .nav-content {
   display: flex;
@@ -118,7 +111,7 @@ nav.open .nav-content span {
 .rect-box.show {
   display: flex;
 }
-.rect-box .rect-btn {
+.rect-box .rect-btn, .rect-box .example-btn {
   padding: 8px 16px;
   margin: 4px;
   box-sizing: border-box;
@@ -130,7 +123,7 @@ nav.open .nav-content span {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-.rect-box .rect-btn:hover {
+.rect-box .rect-btn:hover, .rect-box .example-btn:hover {
   background-color: #1a4567;
 }
 .button-row {
@@ -204,4 +197,13 @@ nav.open .nav-content span {
 }
 .suggestion-item:hover {
   background-color: #f0f0f0;
+}
+
+input.search-input {
+  display: inline-block;
+  appearance: none;
+  /* box-sizing: border-box; */
+  /* border-radius: 0; */
+  max-width: 70%;
+  /* line-height: 12px; */
 }

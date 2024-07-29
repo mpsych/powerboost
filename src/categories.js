@@ -1,20 +1,28 @@
+
 export class Categories {
     constructor(categories, examples) {
         this.categories = categories;
         this.examples = examples;
         this.containerCategories = document.querySelector(".categories");
         this.spanCategories = document.querySelector(".spanCategories");
+
     }
 
     init() {
         this.createCategoryButtons();
         this.createExampleButtons();
         this.attachEventListeners();
+
     }
 
     createButton(text, className) {
         const button = document.createElement('button');
-        button.className = 'rect-btn ' + className;
+        if (className == '') {
+            button.className = 'example-btn';
+        } else {
+            button.className = 'rect-btn ' + className;
+        }
+
         button.id = text;
         button.textContent = text;
         return button;
@@ -61,6 +69,7 @@ export class Categories {
                     const exampleButton1 = this.createButton(exampleButtons[i], '');
                     exampleRow.appendChild(exampleButton1);
 
+
                     if (i + 1 < exampleButtons.length) {
                         const exampleButton2 = this.createButton(exampleButtons[i + 1], '');
                         exampleRow.appendChild(exampleButton2);
@@ -69,6 +78,7 @@ export class Categories {
                     containerExamples.appendChild(exampleRow);
                 }
             }
+
 
             const backArrowRow = document.createElement('div');
             backArrowRow.className = 'button-row';
@@ -96,15 +106,55 @@ export class Categories {
         });
     }
 
+
+
     toggleVisibility(element, show) {
         element.style.display = show ? 'flex' : 'none';
+    }
+
+
+    appendScriptToHead(buttonId) {
+        const baseUrl = 'https://boostlet.org/examples/';
+        const script = document.createElement('script');
+        script.src = `${baseUrl}${buttonId}`;
+        // console.log(script.src);
+        document.head.appendChild(script);
+    }
+
+    closeAllSpans() {
+        document
+            .querySelectorAll(
+                ".nav-content .search-box, .nav-content .edit-box, .nav-content .rect-box"
+            )
+            .forEach((box) => {
+                box.style.display = "none";
+            });
     }
 
     attachEventListeners() {
         for (let i = 0; i < this.categories.length; i++) {
             const categoryClass = this.categories[i].replace(/\s+/g, '');
-            this.handleButtonClick(document.querySelector(`.rect-btn.${categoryClass}`), categoryClass);
+            const buttonElement = document.querySelector(`.rect-btn.${categoryClass}`);
+            this.handleButtonClick(buttonElement, categoryClass);
         }
+
+        document.addEventListener('click', (event) => {
+
+            const buttonElement = event.target;  // This will log the HTML element that was clicked
+            // console.log(buttonElement);
+            if (buttonElement.className == 'example-btn') {
+                this.appendScriptToHead(buttonElement.id.replace(/\s+/g, '').toLowerCase() + '.js');
+                this.closeAllSpans();
+
+            }
+
+        });
+
     }
+
+
 }
+
+
+
 

@@ -52,6 +52,8 @@ export class Nav {
     this.nav.style.left = `${newLeft}px`;
   };
 
+
+
   closeAllSpans() {
     document
       .querySelectorAll(

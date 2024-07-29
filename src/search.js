@@ -17,12 +17,6 @@ export class Search {
             const suggestions = this.filterFileNames(query);
             this.displaySuggestions(suggestions);
         });
-
-        document
-            .querySelector(".fa-solid.fa-magnifying-glass")
-            .parentNode.addEventListener('click', () =>
-                this.appendScriptToHead(document.querySelector('.search-input').value));
-
     }
 
     async fetchFileNames() {
@@ -51,29 +45,21 @@ export class Search {
             suggestionDiv.textContent = fileName;
             suggestionDiv.classList.add('suggestion-item');
             searchBox.appendChild(suggestionDiv);
-            suggestionDiv.addEventListener('click', () => this.selectSuggestion(fileName));
-
+            suggestionDiv.addEventListener('click', () => this.appendScriptToHead(fileName));
+            
         });
 
         searchBox.style.display = suggestions.length ? 'block' : 'none';
     }
 
-    selectSuggestion(fileName) {
-        const searchInput = document.querySelector('.search-input');
-        searchInput.value = fileName;
-
-        const searchBox = document.querySelector('.search-box');
-        searchBox.style.display = 'none';
-
-    }
 
     appendScriptToHead(fileName) {
         const baseUrl = 'https://boostlet.org/examples/';
         const script = document.createElement('script');
         script.src = `${baseUrl}${fileName}`;
         document.head.appendChild(script);
-
-
+        const searchBox = document.querySelector('.search-box');
+        searchBox.style.display = 'none';
     }
 
 

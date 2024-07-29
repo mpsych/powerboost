@@ -18,8 +18,6 @@ export class Editor {
 
         outputDiv.innerHTML = "";
 
-
-
         console.log = function (message) {
             outputDiv.innerHTML += message + "<br>";
         };
@@ -29,6 +27,8 @@ export class Editor {
         } catch (e) {
             console.log(e);
         }
+
+
     }
 }
 
