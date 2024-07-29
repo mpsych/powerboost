@@ -31,7 +31,7 @@ setTimeout(async function () {
 
     // Initialize the Categories class
     
-    const categories = new Categories(Boostlet.categories, Boostlet.examples);
+    const categories = new Categories();
     await categories.init();
 
 

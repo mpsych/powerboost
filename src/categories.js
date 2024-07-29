@@ -115,7 +115,7 @@ export class Categories {
 
 
     appendScriptToHead(buttonId) {
-        const baseUrl = 'https://boostlet.org/examples/';
+        const baseUrl = 'https://raw.githubusercontent.com/gaiborjosue/boostlet/webllm/examples/';
         const script = document.createElement('script');
         script.src = `${baseUrl}${buttonId}`;
         // console.log(script.src);
@@ -154,29 +154,28 @@ export class Categories {
     }
 
     async fetchBoostletFiles() {
-      const baseurl = 'https://api.github.com/repos/gaiborjosue/boostlet/contents/examples/';
-      const response = await fetch(baseurl);
-      const html = await response.text();
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
-      const boostletFiles = doc.querySelectorAll('a[href$=".js"]');
-  
-      const filesByCategory = {};
-  
-      await Promise.all(Array.from(boostletFiles).map(async (file) => {
-        const fileName = file.getAttribute('href');
-        const fileName_edit = fileName.substring(fileName.lastIndexOf('/') + 1, fileName.lastIndexOf('.'));
-        const category = await this.getCategoryFromFile(fileName_edit);
-        if (!filesByCategory[category]) {
-          filesByCategory[category] = [];
-        }
-        filesByCategory[category].push(fileName_edit);
-      }));
-
-      console.log(filesByCategory);
-  
-      return filesByCategory;
-    }
+        const baseurl = 'https://api.github.com/repos/gaiborjosue/boostlet/contents/examples?ref=webllm';
+        const response = await fetch(baseurl);
+        const files = await response.json();
+    
+        const filesByCategory = {};
+    
+        await Promise.all(files.map(async (file) => {
+          if (file.type === "file" && file.name.endsWith(".js")) {
+            const fileName = file.name;
+            const fileNameEdit = fileName.substring(fileName.lastIndexOf('/') + 1, fileName.lastIndexOf('.'));
+            const category = await this.getCategoryFromFile(file.download_url);
+            if (!filesByCategory[category]) {
+              filesByCategory[category] = [];
+            }
+            filesByCategory[category].push(fileNameEdit);
+          }
+        }));
+    
+        console.log(filesByCategory);
+    
+        return filesByCategory;
+      }
   
     async getCategoryFromFile(fileName) {
       const response = await fetch(`https://raw.githubusercontent.com/gaiborjosue/boostlet/webllm/examples/${fileName}.js`);
