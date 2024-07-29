@@ -26,7 +26,7 @@ export class Powerboost {
     console.log("Loading scripts...");
     // Util.load_Scripts("https://rohinideshmukh.github.io/boostlet/dist/boostlet.min.js");
     // Util.load_Scripts("http://localhost:5501/dist/boostlet.min.js");
-    Util.load_Scripts("https://gaiborjosuie.github.io/boostlet/dist/boostlet.min.js");
+    Util.load_Scripts("https://gaiborjosue.github.io/boostlet/dist/boostlet.min.js");
     Util.load_Scripts("https://cdnjs.cloudflare.com/ajax/libs/ace/1.33.0/ace.js");
 
     console.log("Scripts loaded.");
