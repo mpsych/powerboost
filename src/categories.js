@@ -1,18 +1,19 @@
 
 export class Categories {
-    constructor(categories, examples) {
-        this.categories = categories;
-        this.examples = examples;
+    constructor() {
+        this.categories = [];
+        this.examples = new Map();
         this.containerCategories = document.querySelector(".categories");
         this.spanCategories = document.querySelector(".spanCategories");
+      }
 
-    }
-
-    init() {
+    async init() {
+        const filesByCategory = await this.fetchBoostletFiles();
+        this.categories = Object.keys(filesByCategory);
+        this.examples = new Map(Object.entries(filesByCategory));
         this.createCategoryButtons();
         this.createExampleButtons();
         this.attachEventListeners();
-
     }
 
     createButton(text, className) {
@@ -150,6 +151,39 @@ export class Categories {
 
         });
 
+    }
+
+    async fetchBoostletFiles() {
+      const baseurl = 'https://api.github.com/repos/gaiborjosue/boostlet/contents/examples/';
+      const response = await fetch(baseurl);
+      const html = await response.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const boostletFiles = doc.querySelectorAll('a[href$=".js"]');
+  
+      const filesByCategory = {};
+  
+      await Promise.all(Array.from(boostletFiles).map(async (file) => {
+        const fileName = file.getAttribute('href');
+        const fileName_edit = fileName.substring(fileName.lastIndexOf('/') + 1, fileName.lastIndexOf('.'));
+        const category = await this.getCategoryFromFile(fileName_edit);
+        if (!filesByCategory[category]) {
+          filesByCategory[category] = [];
+        }
+        filesByCategory[category].push(fileName_edit);
+      }));
+
+      console.log(filesByCategory);
+  
+      return filesByCategory;
+    }
+  
+    async getCategoryFromFile(fileName) {
+      const response = await fetch(`https://raw.githubusercontent.com/gaiborjosue/boostlet/webllm/examples/${fileName}.js`);
+      const scriptText = await response.text();
+      const categoryRegex = /CATEGORY\s*=\s*["']([^"']+)["']/;
+      const match = categoryRegex.exec(scriptText);
+      return match ? match[1] : "Others";
     }
 
 
