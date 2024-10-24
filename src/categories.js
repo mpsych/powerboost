@@ -3,10 +3,10 @@ export class Categories {
     constructor() {
         this.categories = [];
         this.examples = new Map();
-        this.repoOwner = 'gaiborjosue';
+        this.repoOwner = 'mpsych';
         this.repoName = 'boostlet';
         this.folderPath = 'examples';
-        this.apiUrl = `https://api.github.com/repos/${this.repoOwner}/${this.repoName}/contents/${this.folderPath}?ref=webllm`;
+        this.apiUrl = `https://api.github.com/repos/${this.repoOwner}/${this.repoName}/contents/${this.folderPath}`;
         this.containerCategories = document.querySelector(".categories");
         this.spanCategories = document.querySelector(".spanCategories");
       }
@@ -18,6 +18,7 @@ export class Categories {
         this.createCategoryButtons();
         this.createExampleButtons();
         this.attachEventListeners();
+
     }
 
     createButton(text, className) {
