@@ -6,86 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PowerBoostlet</title>
     <style>
-      a {
-        color: #007ec6;
-      }
-
-      .buttons {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 20px;
-        text-align: center;
-      }
-
-      .button {
-        background-color: white;
-        color: black;
-        border: 2px solid black;
-        padding: 10px 20px;
-        border-radius: 10px;
-        cursor: pointer;
-        font-size: 20px;
-        font-weight: bolder;
-      }
-
-      .button:hover {
-        background-color: black;
-        color: white;
-      }
     </style>
-  </head>
-
-  <body>
-    <div>
-      <a href="" id="floatingUI.js"
-        ><button class="button">PowerBoost😎</button></a
-      >
-    </div>
-
-    <script>
-      // create bookmark
-      function load_boostlet(url, callback) {
-        let xhr = new XMLHttpRequest();
-        xhr.open("GET", url);
-        xhr.onreadystatechange = function () {
-          if (xhr.readyState === 4) {
-            // request done
-            callback(xhr.response);
-
-            return;
-          }
-        };
-
-        xhr.send(null);
-      }
-
-      // FROM https://caiorss.github.io/bookmarklet-maker/
-      function compile_boostlet(code) {
-        var output =
-          "javascript:" +
-          encodeURIComponent("(function(){" + code.trim() + "})();");
-
-        return output;
-      }
-
-      function setup_boostlet_button(id, url) {
-        var link = document.getElementById(id);
-        load_boostlet(url, function (code) {
-          output = compile_boostlet(code);
-          link.href = output;
-        });
-      }
-
-      window.onload = function () {
-        var baseurl =
-          "https://raw.githubusercontent.com/mpsych/powerboost/refs/heads/main/";
-          // "http://localhost:5500/powerboost/";
-
-          // "https://raw.githubusercontent.com/gaiborjosue/powerboost/nav/"
-
-        var button = "floatingUI.js";
-        setup_boostlet_button(button, baseurl + button);
-      };
-    </script>
-  </body>
+</head>
+<body>
+    <script type="module" src="floatingUI.js"></script>
+</body>
 </html>

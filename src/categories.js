@@ -1,198 +1,117 @@
-
 export class Categories {
-    constructor() {
+    constructor(pane) {
+        this.pane = pane;
         this.categories = [];
         this.examples = new Map();
         this.repoOwner = 'mpsych';
         this.repoName = 'boostlet';
         this.folderPath = 'examples';
         this.apiUrl = `https://api.github.com/repos/${this.repoOwner}/${this.repoName}/contents/${this.folderPath}`;
-        this.containerCategories = document.querySelector(".categories");
-        this.spanCategories = document.querySelector(".spanCategories");
-      }
+        
+        // State for category selection
+        this.state = {
+            selectedCategory: '',  // Empty default state
+            currentExamples: []
+        };
+    }
 
     async init() {
         const filesByCategory = await this.fetchBoostletFiles();
         this.categories = Object.keys(filesByCategory);
         this.examples = new Map(Object.entries(filesByCategory));
-        this.createCategoryButtons();
-        this.createExampleButtons();
-        this.attachEventListeners();
-
+        
+        this.createBoostletsUI();
     }
 
-    createButton(text, className) {
-        const button = document.createElement('button');
-        if (className == '') {
-            button.className = 'example-btn';
-        } else {
-            button.className = 'rect-btn ' + className;
-        }
+    createBoostletsUI() {
+        // Create main Boostlets folder
+        const boostletsFolder = this.pane.addFolder({
+            title: 'Boostlets',
+            expanded: true
+        });
 
-        button.id = text;
-        button.textContent = text;
-        return button;
-    }
-
-    createBackArrow(className) {
-        const backArrow = document.createElement('div');
-        backArrow.className = 'back-arrow ' + className;
-        const icon = document.createElement('i');
-        icon.className = 'fa-solid fa-arrow-left';
-        backArrow.appendChild(icon);
-        return backArrow;
-    }
-
-    createCategoryButtons() {
-        for (let i = 0; i < this.categories.length; i += 2) {
-            const buttonRow = document.createElement('div');
-            buttonRow.className = 'button-row';
-
-            const button1 = this.createButton(this.categories[i], this.categories[i].replace(/\s+/g, ''));
-            buttonRow.appendChild(button1);
-
-            if (i + 1 < this.categories.length) {
-                const button2 = this.createButton(this.categories[i + 1], this.categories[i + 1].replace(/\s+/g, ''));
-                buttonRow.appendChild(button2);
+        // Add category dropdown with empty option
+        boostletsFolder.addBinding(this.state, 'selectedCategory', {
+            label: 'Category',
+            options: {
+                'Select a category': '',  // Empty default option
+                ...this.categories.reduce((acc, cat) => {
+                    acc[cat] = cat;
+                    return acc;
+                }, {})
             }
+        }).on('change', (ev) => {
+            // Update examples when category changes
+            this.state.currentExamples = ev.value ? (this.examples.get(ev.value) || []) : [];
+            this.updateExampleButtons(boostletsFolder);
+        });
 
-            this.containerCategories.appendChild(buttonRow);
-        }
+        // Initial empty state - no buttons
+        this.updateExampleButtons(boostletsFolder);
     }
 
-    createExampleButtons() {
-        this.categories.forEach(category => {
-            const containerExamples = document.createElement('div');
-            containerExamples.className = 'rect-box ' + category.replace(/\s+/g, '');
-            containerExamples.style.display = 'none';
+    updateExampleButtons(folder) {
+        // Remove existing example buttons if any
+        const existingButtons = folder.children.filter(child => 
+            child.element.classList.contains('example-button')
+        );
+        existingButtons.forEach(button => folder.remove(button));
 
-            const exampleButtons = this.examples.get(category);
-            if (exampleButtons) {
-                for (let i = 0; i < exampleButtons.length; i += 2) {
-                    const exampleRow = document.createElement('div');
-                    exampleRow.className = 'button-row';
-
-                    const exampleButton1 = this.createButton(exampleButtons[i], '');
-                    exampleRow.appendChild(exampleButton1);
-
-
-                    if (i + 1 < exampleButtons.length) {
-                        const exampleButton2 = this.createButton(exampleButtons[i + 1], '');
-                        exampleRow.appendChild(exampleButton2);
-                    }
-
-                    containerExamples.appendChild(exampleRow);
-                }
-            }
-
-
-            const backArrowRow = document.createElement('div');
-            backArrowRow.className = 'button-row';
-            const backArrow = this.createBackArrow(category.replace(/\s+/g, ''));
-            backArrowRow.appendChild(backArrow);
-            containerExamples.appendChild(backArrowRow);
-
-            this.spanCategories.appendChild(containerExamples);
+        // Add new buttons for current examples
+        this.state.currentExamples.forEach(example => {
+            const btn = folder.addButton({
+                title: example,
+            }).on('click', () => {
+                this.loadExample(example);
+            });
+            
+            // Add class for identification without using label
+            btn.element.classList.add('example-button');
         });
     }
 
-    handleButtonClick(buttonClass, divToShowClass) {
-        const categoriesDiv = document.querySelector('.rect-box.categories');
-        const divToShow = document.querySelector(`.rect-box.${divToShowClass}`);
-        const backArrow = divToShow.querySelector('.back-arrow');
-
-        buttonClass.addEventListener('click', () => {
-            this.toggleVisibility(categoriesDiv, false);
-            this.toggleVisibility(divToShow, true);
-        });
-
-        backArrow.addEventListener('click', () => {
-            this.toggleVisibility(categoriesDiv, true);
-            this.toggleVisibility(divToShow, false);
-        });
-    }
-
-
-
-    toggleVisibility(element, show) {
-        element.style.display = show ? 'flex' : 'none';
-    }
-
-
-    appendScriptToHead(buttonId) {
+    loadExample(exampleName) {
         const baseUrl = 'https://boostlet.org/examples/';
         const script = document.createElement('script');
-        script.src = `${baseUrl}${buttonId}`;
-        console.log(script.src);
+        script.src = `${baseUrl}${exampleName.replace(/\s+/g, '').toLowerCase()}.js`;
         document.head.appendChild(script);
     }
 
-    closeAllSpans() {
-        document
-            .querySelectorAll(
-                ".nav-content .search-box, .nav-content .edit-box, .nav-content .rect-box"
-            )
-            .forEach((box) => {
-                box.style.display = "none";
-            });
-    }
-
-    attachEventListeners() {
-        for (let i = 0; i < this.categories.length; i++) {
-            const categoryClass = this.categories[i].replace(/\s+/g, '');
-            const buttonElement = document.querySelector(`.rect-btn.${categoryClass}`);
-            this.handleButtonClick(buttonElement, categoryClass);
-        }
-
-        document.addEventListener('click', (event) => {
-
-            const buttonElement = event.target;  // This will log the HTML element that was clicked
-            // console.log(buttonElement);
-            if (buttonElement.className == 'example-btn') {
-                this.appendScriptToHead(buttonElement.id.replace(/\s+/g, '').toLowerCase() + '.js');
-                this.closeAllSpans();
-
-            }
-
-        });
-
-    }
-
     async fetchBoostletFiles() {
-        const baseurl = this.apiUrl;
-        const response = await fetch(baseurl);
-        const files = await response.json();
+        try {
+            const response = await fetch(this.apiUrl);
+            const files = await response.json();
+            const filesByCategory = {};
 
-        const filesByCategory = {};
+            await Promise.all(files.map(async (file) => {
+                if (file.type === "file" && file.name.endsWith(".js")) {
+                    const fileName = file.name;
+                    const fileNameEdit = fileName.substring(fileName.lastIndexOf('/') + 1, fileName.lastIndexOf('.'));
+                    const category = await this.getCategoryFromFile(file.download_url);
+                    if (!filesByCategory[category]) {
+                        filesByCategory[category] = [];
+                    }
+                    filesByCategory[category].push(fileNameEdit);
+                }
+            }));
 
-        await Promise.all(files.map(async (file) => {
-        if (file.type === "file" && file.name.endsWith(".js")) {
-            const fileName = file.name;
-            const fileNameEdit = fileName.substring(fileName.lastIndexOf('/') + 1, fileName.lastIndexOf('.'));
-            const category = await this.getCategoryFromFile(file.download_url);
-            if (!filesByCategory[category]) {
-            filesByCategory[category] = [];
-            }
-            filesByCategory[category].push(fileNameEdit);
+            return filesByCategory;
+        } catch (error) {
+            console.error('Error fetching files:', error);
+            return {};
         }
-        }));
-
-        console.log(filesByCategory);
-
-        return filesByCategory;
     }
 
     async getCategoryFromFile(downloadUrl) {
-        const response = await fetch(downloadUrl);
-        const scriptText = await response.text();
-        const categoryRegex = /CATEGORY\s*=\s*["']([^"']+)["']/;
-        const match = categoryRegex.exec(scriptText);
-        return match ? match[1] : "Others";
+        try {
+            const response = await fetch(downloadUrl);
+            const scriptText = await response.text();
+            const categoryRegex = /CATEGORY\s*=\s*["']([^"']+)["']/;
+            const match = categoryRegex.exec(scriptText);
+            return match ? match[1] : "Others";
+        } catch (error) {
+            console.error('Error fetching category:', error);
+            return "Others";
+        }
     }
-
-
 }
-
-
-
-
