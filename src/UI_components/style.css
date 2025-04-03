@@ -1,6 +1,6 @@
 nav {
   position: fixed;
-  top: 300px;
+  top: 90%;
   right: 0;
   right: calc(100% - 100px);
   width: 80px;
