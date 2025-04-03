@@ -32,16 +32,16 @@
         <div id="editor">Boostlet.init(); 
 console.log(Boostlet.framework.name);
 
-image = Boostlet.get_image();
+var image = Boostlet.get_image();
 
 
-kernel = [
+var kernel = [
   -1, 0, 1,
   -2, 0, 2,
   -1, 0, 1
 ];
 
-filtered = Boostlet.filter(image.data, image.width, image.height, kernel);
+var filtered = Boostlet.filter(image.data, image.width, image.height, kernel);
 
 Boostlet.set_image( filtered );
 </div>
