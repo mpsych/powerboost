@@ -20,14 +20,14 @@ export class Nav {
 
       if (!this.isMoving) {
         this.nav.classList.toggle("open");
-        console.log('showing/closing');
+        // console.log('showing/closing');
 
         if (this.nav.classList.contains("open")) {
           // show the rectbox
           this.toggleSpan(document.querySelector(".rect-box"));
         } else {
           // hide rectbox and all kids
-          console.log('hiding all')
+          // console.log('hiding all')
           document
             .querySelectorAll(
                 ".rect-box"
