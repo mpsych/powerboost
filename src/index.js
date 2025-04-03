@@ -25,19 +25,19 @@ setTimeout(async function () {
 
 
     // Initialize the Editor class
-    const editor = new Editor(window.Powerboost.editor, "output", "run-btn");
+    const editor = new Editor(window.Powerboost.editor, "outputtext", "run-btn");
     editor.init();
 
 
     // Initialize the Categories class
     
-    const categories = new Categories();
+    const categories = new Categories("nav");
     await categories.init();
 
 
 
     // Initialize the search class
-    const search = new Search();
-    search.init();
+    // const search = new Search();
+    // search.init();
 
 }, 1000);

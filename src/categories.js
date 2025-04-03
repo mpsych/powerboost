@@ -1,6 +1,9 @@
 
 export class Categories {
-    constructor() {
+    constructor(nav) {
+
+        this.nav = document.querySelector(nav);
+
         this.categories = [];
         this.examples = new Map();
         this.repoOwner = 'mpsych';
@@ -123,8 +126,25 @@ export class Categories {
         const baseUrl = 'https://boostlet.org/examples/';
         const script = document.createElement('script');
         script.src = `${baseUrl}${buttonId}`;
-        console.log(script.src);
+        // console.log('Locked and loaded:', script.src);
+        // window.__POWERBOOST_SCRIPT__ = script;
+
+        // lets grab the source code too
+        // fetch(script.src)
+        //   .then(response => response.text())
+        //   .then(jsCode => {
+        //     window.powerboosteditor.setValue(jsCode, -1);
+        //   })
+        //   .catch(error => {
+        //     console.error('Error fetching Boostlet source:', error);
+        //   });
+
+        // document.getElementById('playbtn').style.display = 'block';
+
         document.head.appendChild(script);
+
+        this.closeAllSpans();
+        this.nav.classList.toggle("open");
     }
 
     closeAllSpans() {
@@ -150,7 +170,9 @@ export class Categories {
             // console.log(buttonElement);
             if (buttonElement.className == 'example-btn') {
                 this.appendScriptToHead(buttonElement.id.replace(/\s+/g, '').toLowerCase() + '.js');
-                this.closeAllSpans();
+                // this.closeAllSpans();
+                document.querySelectorAll('.rect-box').forEach((box) => {box.style.display='none'})
+
 
             }
 

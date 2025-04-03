@@ -2,22 +2,51 @@ export class Nav {
   constructor(navSelector, toggleBtnSelector) {
     this.nav = document.querySelector(navSelector);
     this.toggleBtn = document.querySelector(toggleBtnSelector);
+    this.isMoving = false;
+    console.log('new')
   }
 
   init() {
-    this.toggleBtn.addEventListener("click", () => {
-      this.nav.classList.toggle("open");
-    });
 
-    this.nav.addEventListener("mousedown", () => {
+    this.toggleBtn.addEventListener("mousedown", (e) => {
+
       this.nav.addEventListener("mousemove", this.onDrag);
+      
     });
 
-    this.nav.addEventListener("mouseup", () => {
+    this.toggleBtn.addEventListener("mouseup", (e) => {
+
       this.nav.removeEventListener("mousemove", this.onDrag);
+
+      if (!this.isMoving) {
+        this.nav.classList.toggle("open");
+        console.log('showing/closing');
+
+        if (this.nav.classList.contains("open")) {
+          // show the rectbox
+          this.toggleSpan(document.querySelector(".rect-box"));
+        } else {
+          // hide rectbox and all kids
+          console.log('hiding all')
+          document
+            .querySelectorAll(
+                ".rect-box"
+            )
+            .forEach((box) => {
+                box.style.display = "none";
+            });
+
+        }
+
+        
+        // document.querySelector(".rect-box").toggle("show");
+      }
+
+      this.isMoving = false;
+
     });
 
-    this.nav.addEventListener("mouseleave", () => {
+    this.toggleBtn.addEventListener("mouseleave", (e) => {
       this.nav.removeEventListener("mousemove", this.onDrag);
     });
 
@@ -27,14 +56,19 @@ export class Nav {
         this.toggleSpan(document.querySelector(".edit-box"));
       });
 
-    document
-      .querySelector(".fa-sharp.fa-solid.fa-b")
-      .parentNode.addEventListener("click", () => {
-        this.toggleSpan(document.querySelector(".rect-box"));
-      });
+    // document
+      // .querySelector(".fa-sharp.fa-solid.fa-b")
+      // .parentNode
+      // .addEventListener("click", () => {
+        // this.toggleSpan(document.querySelector(".rect-box"));
+      // });
+
   }
 
   onDrag = ({ movementX, movementY }) => {
+
+    this.isMoving = true;
+
     const navStyle = window.getComputedStyle(this.nav);
     const navTop = parseInt(navStyle.top);
     const navLeft = parseInt(navStyle.left);
@@ -65,11 +99,14 @@ export class Nav {
   }
 
   toggleSpan(span) {
-    if (span.style.display === "flex") {
-      span.style.display = "none";
-    } else {
-      this.closeAllSpans();
-      span.style.display = "flex";
-    }
+    // span.forEach((span) => {
+      if (span.style.display === "flex") {
+        span.style.display = "none";
+      } else {
+        // this.closeAllSpans();
+        span.style.display = "flex";
+      }
+    // })
+
   }
 }

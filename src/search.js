@@ -1,6 +1,6 @@
 export class Search {
     constructor() {
-        this.repoOwner = 'RohiniDeshmukh';
+        this.repoOwner = 'mpsych';
         this.repoName = 'boostlet';
         this.folderPath = 'examples';
         this.apiUrl = `https://api.github.com/repos/${this.repoOwner}/${this.repoName}/contents/${this.folderPath}`;

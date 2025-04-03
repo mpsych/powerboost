@@ -1,11 +1,13 @@
-<nav class="open">
-  <div class="nav-content">
+<nav class="closed">
+  <div class="nav-content myspan spanCategories">
     <div class="toggle-btn">
       <i class="fas fa-plus"></i>
     </div>
 
+    <div class="rect-box categories"></div>
+
     <!-- search -->
-    <span class="myspan spanSearch" style="--i: 2">
+<!--     <span class="myspan spanSearch" style="--i: 2">
       <a href="#"
         ><input class="search-input" /><i
           class="fa-solid fa-magnifying-glass"
@@ -13,23 +15,49 @@
       ></a>
       <div class="search-box"></div>
     </span>
+ -->
+
+    <!-- Boostlet icon  -->
+<!--     <span class="myspan spanCategories" style="--i: 1">
+      <a href="#"><i class="fa-sharp fa-solid fa-b"></i></a>
+      <div class="rect-box categories"></div>
+    </span>
+ -->
+
 
     <!-- editor  -->
-    <span class="myspan" style="--i: 4">
+    <span class="myspan" style="--i: 1">
       <a href="#"><i class="fa-regular fa-pen-to-square"></i></a>
       <div class="edit-box">
         <div id="editor">Boostlet.init(); 
 console.log(Boostlet.framework.name);
-        </div>
-        <button id="run-btn">Run Code</button>
-        <div id="output"></div>
+
+image = Boostlet.get_image();
+
+
+kernel = [
+  -1, 0, 1,
+  -2, 0, 2,
+  -1, 0, 1
+];
+
+filtered = Boostlet.filter(image.data, image.width, image.height, kernel);
+
+Boostlet.set_image( filtered );
+</div>
+        <!-- <button id="run-btn">Run Code</button> -->
+        <a href="#" id='run-btn'><i class="fa-sharp fa-solid fa-play"></i></a>
+        <div id="output"><div id='outputtext'></div></div>
       </div>
     </span>
 
-    <!-- Boostlet icon  -->
-    <span class="myspan spanCategories" style="--i: 5">
-      <a href="#"><i class="fa-sharp fa-solid fa-b"></i></a>
-      <div class="rect-box categories"></div>
-    </span>
+
+
+
+    <!-- Play btn  -->
+    <!-- <span id='playbtn' class="myspan" style="--i: 3;"> -->
+      
+      
+    <!-- </span> -->
   </div>
 </nav>

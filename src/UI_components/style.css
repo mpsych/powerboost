@@ -7,7 +7,7 @@ nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: grab;
+/*  cursor: grab;*/
   z-index: 9999;
 }
 nav .nav-content {
@@ -19,7 +19,7 @@ nav .nav-content {
 .nav-content span a {
   height: 60px;
   width: 60px;
-  background-color: #fff;
+  background-color: #000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -28,10 +28,11 @@ nav .nav-content {
 }
 .nav-content .toggle-btn {
   font-size: 35px;
-  color: #0e2431;
+  color: #fff;
   z-index: 100;
   cursor: pointer;
   transition: all 0.6s ease;
+      border: solid 4px white;
 }
 .nav-content .myspan {
   position: absolute;
@@ -44,10 +45,11 @@ nav.open .nav-content span {
 }
 .nav-content span a {
   text-decoration: none;
+      border: solid 4px white;
 }
 .nav-content span a i {
   font-size: 24px;
-  color: #0e2431;
+  color: #fff;
   opacity: 0.8;
   transition: 0.2s;
 }
@@ -63,6 +65,7 @@ nav.open .nav-content span {
   width: 210px;
   border-radius: 30px;
   justify-content: right;
+      border: solid 4px white;
 }
 
 .nav-content .spanSearch a i {
@@ -97,20 +100,24 @@ nav.open .nav-content span {
 
 .rect-box {
   position: absolute;
-  top: 130%;
+  padding: 10px;
   width: 300px;
   height: 150px;
-  background-color: rgb(250, 250, 255);
+  background-color: black;
   border-radius: 10px;
   display: none;
   justify-content: center;
   align-items: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   flex-direction: column;
+  border: 4px solid white;
+  left: 40%;
+  top: -280%;
 }
 .rect-box.show {
   display: flex;
 }
+
 .rect-box .rect-btn, .rect-box .example-btn {
   padding: 8px 16px;
   margin: 4px;
@@ -118,13 +125,18 @@ nav.open .nav-content span {
   font-size: 16px;
   border: none;
   border-radius: 5px;
-  background-color: #0e2431;
+  font-weight: bold;
+  font-family: monospace;
+  background-color: #000;
+  border: solid 1px gray;
   color: white;
   cursor: pointer;
   transition: background-color 0.3s ease;
+
 }
 .rect-box .rect-btn:hover, .rect-box .example-btn:hover {
-  background-color: #1a4567;
+  background-color: gray;
+
 }
 .button-row {
   display: flex;
@@ -150,14 +162,15 @@ nav.open .nav-content span {
   font-size: 24px;
   margin-top: 5px;
   visibility: visibile;
-  color: #333;
+  color: #666;
 }
 .edit-box {
   position: absolute;
-  top: 130%;
-  width: 400px;
-  height: 200px;
-  padding: 10px;
+  top: 120%;
+  width: 800px;
+  height: 500px;
+/*  margin-left: -300px;*/
+  padding: 4px;
   background-color: white;
   border-radius: 10px;
   display: none;
@@ -171,15 +184,23 @@ nav.open .nav-content span {
   height: 100%;
   width: 100%;
   border: 1px solid lightgray;
-  margin: auto;
+/*  margin: auto;*/
+  font-size: 18pt;
+  border-radius: 10px;
 }
 #output {
   width: 100%;
-  height: 100%;
+  height: 100px;
   border: 1px solid #ccc;
-  padding: 5px;
+/*  padding: 4px;*/
+  border-radius: 10px;
   overflow: auto;
-  color: #333;
+  color: lime;
+  font-family: monospace;
+  background-color: black;
+}
+#outputtext {
+  padding: 10px;
 }
 #suggestionsContainer {
   background-color: white;
@@ -206,4 +227,45 @@ input.search-input {
   /* border-radius: 0; */
   max-width: 70%;
   /* line-height: 12px; */
+background: black;
+    border: none;
+    color: white;
+    font-size: 15pt;
+    border-bottom: solid 2px #383838;
 }
+
+
+#run-btn {
+/*  color: lime;*/
+    position: absolute;
+    right: 20px;
+    bottom: 55px;
+    z-index: 10000;
+}
+
+/* Target both vertical and horizontal scrollbars */
+.ace_scrollbar {
+  scrollbar-width: thin;               /* For Firefox */
+  scrollbar-color: #888 #222;          /* Thumb and track */
+}
+
+/* For WebKit-based browsers (Chrome, Edge, Safari) */
+.ace_scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.ace_scrollbar::-webkit-scrollbar-track {
+  background: #222;
+}
+
+.ace_scrollbar::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+  border: 2px solid #222;
+}
+
+.ace_scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #aaa;
+}
+

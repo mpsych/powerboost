@@ -2,6 +2,7 @@
 export class Editor {
     constructor(editor, outputDiv, runBtn) {
         this.userCode = editor;
+        window.powerboosteditor = editor;
         this.outputDiv = document.getElementById(outputDiv);
         this.runBtn = document.getElementById(runBtn);
     }
