@@ -6,8 +6,8 @@ export class Powerboost {
   }
 
   load_html(callback) {
-    // Util.load_Html("https://mpsych.github.io/powerboost/src/UI_components/index.html");
-    Util.load_Html("http://localhost:5500/src/UI_components/index.html");
+    Util.load_Html("https://mpsych.github.io/powerboost/src/UI_components/index.html");
+    // Util.load_Html("http://localhost:5500/src/UI_components/index.html");
     // Util.load_Html("https://gaiborjosue.github.io/powerboost/src/UI_components/index.html");
 
     // console.log("HTML loaded.");
@@ -19,8 +19,8 @@ export class Powerboost {
   load_urls() {
     // console.log("inside load_links")
     Util.load_Links("stylesheet", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css");
-    // Util.load_Links("stylesheet", "https://mpsych.github.io/powerboost/src/UI_components/style.css");
-    Util.load_Links("stylesheet", "http://localhost:5500/src/UI_components/style.css");
+    Util.load_Links("stylesheet", "https://mpsych.github.io/powerboost/src/UI_components/style.css");
+    // Util.load_Links("stylesheet", "http://localhost:5500/src/UI_components/style.css");
     // Util.load_Links("stylesheet", "https://gaiborjosue.github.io/powerboost/src/UI_components/style.css");
 
     console.log("Loading scripts...");
