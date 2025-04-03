@@ -71,6 +71,7 @@
       function setup_boostlet_button(id, url) {
         var link = document.getElementById(id);
         load_boostlet(url, function (code) {
+          console.log(code)
           output = compile_boostlet(code);
           link.href = output;
         });
