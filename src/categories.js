@@ -192,10 +192,15 @@ export class Categories {
             const fileName = file.name;
             const fileNameEdit = fileName.substring(fileName.lastIndexOf('/') + 1, fileName.lastIndexOf('.'));
             const category = await this.getCategoryFromFile(file.download_url);
-            if (!filesByCategory[category]) {
-            filesByCategory[category] = [];
+            
+            if (category != "Hidden") {
+
+                if (!filesByCategory[category]) {
+                filesByCategory[category] = [];
+                }
+                filesByCategory[category].push(fileNameEdit);
+
             }
-            filesByCategory[category].push(fileNameEdit);
         }
         }));
 
