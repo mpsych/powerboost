@@ -169,7 +169,7 @@ export class Categories {
             const buttonElement = event.target;  // This will log the HTML element that was clicked
             // console.log(buttonElement);
             if (buttonElement.className == 'example-btn') {
-                this.appendScriptToHead(buttonElement.id.replace(/\s+/g, '').toLowerCase() + '.js');
+                this.appendScriptToHead(buttonElement.id.replace(/\s+/g, '') + '.js');
                 // this.closeAllSpans();
                 document.querySelectorAll('.rect-box').forEach((box) => {box.style.display='none'})
 
